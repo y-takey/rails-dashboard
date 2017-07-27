@@ -20,5 +20,16 @@
   "bugs": {
     "url": "https://github.com/y-takey/rails-dashboard/issues"
   },
-  "homepage": "https://github.com/y-takey/rails-dashboard#readme"
+  "homepage": "https://github.com/y-takey/rails-dashboard#readme",
+  "devDependencies": {
+    "babel-cli": "^6.24.1",
+    "babel-core": "^6.25.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
+    "blessed": "^0.1.81",
+    "react": "0.14.0",
+    "react-blessed": "^0.1.8"
+  },
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }
