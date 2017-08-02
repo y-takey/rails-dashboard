@@ -3,10 +3,10 @@ import blessed from "blessed";
 const screen = blessed.screen({
   autoPadding: true,
   smartCSR: true,
-  title: "react-blessed hello world"
+  title: "Rails Dashboard"
 });
 
-screen.key(["escape", "q", "C-c"], function(ch, key) {
+screen.key(["q", "C-c"], function(ch, key) {
   return process.exit(0);
 });
 
