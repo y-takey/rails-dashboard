@@ -1,10 +1,16 @@
-import React, { Component } from "react";
+import React, { Component } from 'react';
 
-const header = ["date", "status", "method", "url"];
+const header = ['date', 'status', 'method', 'url'];
 const style = {
-  border: { fg: "white" },
-  header: { bg: "cyan" },
-  cell: { fg: "white", selected: { bg: "green", fg: "white" } }
+  border: { fg: 'white' },
+  header: { bg: 'cyan' },
+  cell: { fg: 'white', selected: { bg: 'green', fg: 'white' } }
+};
+
+const containerOptions = {
+  ref: 'table',
+  border: { type: 'line' },
+  style: style
 };
 
 const rows = data => {
@@ -47,30 +53,10 @@ class RequestList extends Component {
   }
 
   render() {
-    const { top, height, selected, onSelect, onKeyEscape, onKeyP, data } = this.props;
+    const { top, height, data } = this.props;
 
     return (
-      <box
-        scrollable={true}
-        vi={true}
-        focused={true}
-        selected={selected}
-        scrollbar={{ ch: " ", inverse: true }}
-        keys={true}
-        mouse={true}
-        top={top}
-        height={height}
-        left="0"
-        width="100%"
-        onSelect={onSelect}
-        onKeyEscape={onKeyEscape}
-        onKeyP={onKeyP}
-        ref="table"
-        invertSelected={true}
-        border={{ type: "line" }}
-        style={style}
-        rows={rows(data)}
-      >
+      <box top={top} height={height} {...containerOptions}>
         {rows(data)}
         <box top={4}>
           rows:{this.state.rows}

@@ -1,19 +1,36 @@
-import React, { Component } from "react";
+import _ from 'lodash';
+import React, { Component } from 'react';
 
-const style = { fg: "white", border: { fg: "white" } };
+const style = { fg: 'white', border: { fg: 'white' } };
+
+const items = [
+  { key: 'breakdown', label: 'Breakdown [b]' },
+  { key: 'params', label: 'Params [p]' },
+  { key: 'activerecord', label: 'ActiveRecord [a]' },
+  { key: 'rendering', label: 'Rendering [r]' }
+];
+
+const itemSize = _.max(_.map(items, item => item.label.length));
 
 class RequestDetail extends Component {
+  renderItems(mode) {
+    console.log(('length': itemSize));
+    return items.map((item, i) => {
+      const style = item.key === mode ? { bg: 'cyan' } : { bg: '' };
+      return <text top={i} key={`item-${i}`} left={0} width={itemSize} content={item.label} style={style} />;
+    });
+  }
+
   render() {
-    const { top, height, data: { params, activeRecords, renderings } } = this.props;
+    const { top, height, mode, data } = this.props;
+    const { params, activeRecords, renderings } = data;
+
     return (
       <box top={top} height={height} left="0" width="100%">
-        <box left={0} width={14}>
-          <text top={0} left={0} width={13} style={{ bg: "cyan" }}>
-            Params
-          </text>
-          <text top={1} left={0} width={13} content="ActiveRecords" />
+        <box left={0} width={itemSize}>
+          {this.renderItems(mode)}
         </box>
-        <box top={0} left={14} width="100%-14" label="Detail" border={{ type: "line" }} style={style}>
+        <box top={0} left={itemSize} width={`100%-${itemSize}`} label="Detail" border={{ type: 'line' }} style={style}>
           <box left={0} width="20%">
             {params[0].value}
           </box>

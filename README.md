@@ -3,6 +3,7 @@
 https://github.com/blessed-ng/blessed/tree/master/docs
 https://github.com/yaronn/blessed-contrib
 https://github.com/dundalek/react-blessed-contrib
+http://blog.npmjs.org/post/118810260230/building-a-simple-command-line-tool-with-npm
 
 # run
 
