@@ -2,6 +2,8 @@ import React, { Component } from "react";
 
 const labelStyle = { fg: "blueBright", bold: true };
 
+// type, sql, duration
+
 class RequestRendering extends Component {
   render() {
     return (

@@ -19,7 +19,7 @@ class RequestBreakdown extends Component {
       <box top={0} height="100%-2" left={0} width="100%-2">
         <box top={1} height={1} left={0} width={19} content="   Response Time : " style={labelStyle} />
         <box top={1} height={1} left={19} width="100%-19" content={format(respTime)} />
-        <box top={2} height={1} left={0} width={27} content="  ===========================" />
+        <box top={2} height={1} left={0} width={29} content="  ===========================" />
         <box top={3} height={1} left={0} width={19} content="        SQL Time : " style={labelStyle} />
         <box top={3} height={1} left={19} width="100%-19" content={format(sqlTime)} />
         <box top={4} height={1} left={0} width={19} content="  Rendering Time : " style={labelStyle} />
