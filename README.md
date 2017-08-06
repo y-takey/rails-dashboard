@@ -28,6 +28,7 @@ magenta
 cyan
 white
 gray
+
 redBright
 greenBright
 yellowBright

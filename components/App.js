@@ -1,19 +1,19 @@
-import _ from 'lodash';
-import events from 'events';
-import React, { Component } from 'react';
-import LogListener from '../lib/LogListener';
-import ServerInfo from './ServerInfo';
-import RequestList from './RequestList';
-import RequestDetail from './RequestDetail';
+import _ from "lodash";
+import events from "events";
+import React, { Component } from "react";
+import LogListener from "../lib/LogListener";
+import ServerInfo from "./ServerInfo";
+import RequestList from "./RequestList";
+import RequestDetail from "./RequestDetail";
 
 const eventEmitter = new events.EventEmitter();
 
 const dmyServerInfo = {
-  webServer: 'Puma',
-  railsVersion: '5.1.2',
-  url: 'http://localhost:3000',
-  webServerVersion: '3.9.2',
-  rubyVersion: '2.2.1p100'
+  webServer: "Puma",
+  railsVersion: "5.1.2",
+  url: "http://localhost:3000",
+  webServerVersion: "3.9.2",
+  rubyVersion: "2.2.1p100"
 };
 
 const containerOptions = {
@@ -29,7 +29,7 @@ const initialState = {
   requests: [],
   selectedNo: null,
   showDetail: false,
-  detailMode: 'breakdown'
+  detailMode: "breakdown"
 };
 
 class App extends Component {
@@ -42,14 +42,14 @@ class App extends Component {
     this.onRailsRequested = this.onRailsRequested.bind(this);
     this.onKeypress = this.onKeypress.bind(this);
 
-    eventEmitter.on('started', this.onRailsStarted);
-    eventEmitter.on('requested', this.onRailsRequested);
+    eventEmitter.on("started", this.onRailsStarted);
+    eventEmitter.on("requested", this.onRailsRequested);
   }
 
   componentDidMount() {
     const listener = new LogListener(eventEmitter);
-    this.props.railsProc.stdout.on('data', listener.stdout);
-    this.props.railsProc.stderr.on('data', listener.stderr);
+    this.props.railsProc.stdout.on("data", listener.stdout);
+    this.props.railsProc.stderr.on("data", listener.stderr);
   }
 
   onRailsStarted(serverInfo) {
@@ -95,10 +95,10 @@ class App extends Component {
         up,
         j: down,
         k: up,
-        b: _.partial(this.changeMode, 'breakdown').bind(this),
-        p: _.partial(this.changeMode, 'params').bind(this),
-        a: _.partial(this.changeMode, 'activerecord').bind(this),
-        r: _.partial(this.changeMode, 'rendering').bind(this),
+        b: _.partial(this.changeMode, "breakdown").bind(this),
+        p: _.partial(this.changeMode, "params").bind(this),
+        a: _.partial(this.changeMode, "activerecord").bind(this),
+        r: _.partial(this.changeMode, "rendering").bind(this),
         enter: _.partial(this.showDetail, true).bind(this),
         escape: _.partial(this.showDetail, false).bind(this)
       };
@@ -114,10 +114,10 @@ class App extends Component {
   render() {
     const { serverInfo, requests, showDetail, detailMode, selectedNo } = this.state;
     const showable = showDetail && selectedNo;
-    const listHeight = showable ? '50%-1' : '100%-1';
+    const listHeight = showable ? "50%-1" : "100%-1";
     const detailProps = {
-      top: '50%+1',
-      height: '50%',
+      top: "50%",
+      height: "50%",
       data: requests[selectedNo - 1],
       mode: detailMode
     };

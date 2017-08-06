@@ -1,24 +1,37 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import _ from "lodash";
+import React, { Component } from "react";
+import RequestBreakdown from "./RequestBreakdown";
+import RequestParams from "./RequestParams";
+import RequestActiveRecord from "./RequestActiveRecord";
+import RequestRendering from "./RequestRendering";
 
-const style = { fg: 'white', border: { fg: 'white' } };
+const style = { fg: "white", border: { fg: "white" } };
 
 const items = [
-  { key: 'breakdown', label: 'Breakdown [b]' },
-  { key: 'params', label: 'Params [p]' },
-  { key: 'activerecord', label: 'ActiveRecord [a]' },
-  { key: 'rendering', label: 'Rendering [r]' }
+  { key: "breakdown", label: " Breakdown [b] ", component: RequestBreakdown },
+  { key: "params", label: " Params [p] ", component: RequestParams },
+  { key: "activerecord", label: " ActiveRecord [a] ", component: RequestActiveRecord },
+  { key: "rendering", label: " Rendering [r] ", component: RequestRendering }
 ];
 
 const itemSize = _.max(_.map(items, item => item.label.length));
 
 class RequestDetail extends Component {
-  renderItems(mode) {
-    console.log(('length': itemSize));
-    return items.map((item, i) => {
-      const style = item.key === mode ? { bg: 'cyan' } : { bg: '' };
-      return <text top={i} key={`item-${i}`} left={0} width={itemSize} content={item.label} style={style} />;
+  renderTabs(left, mode) {
+    const ret = [];
+    const foo = items.forEach((item, i) => {
+      const style = item.key === mode ? { bg: "cyan" } : { bg: "" };
+      ret.push(
+        <text key={`tab-${i}`} left={left + (itemSize + 1) * i} width={itemSize} content={item.label} style={style} />
+      );
+      ret.push(<text key={`sep-${i}`} left={left + (itemSize + 1) * (i + 1) - 1} width={1} content="|" />);
     });
+    return ret;
+  }
+
+  renderDetail(mode, data) {
+    const foo = _.find(items, item => item.key === mode);
+    return <foo.component data={data} />;
   }
 
   render() {
@@ -27,16 +40,11 @@ class RequestDetail extends Component {
 
     return (
       <box top={top} height={height} left="0" width="100%">
-        <box left={0} width={itemSize}>
-          {this.renderItems(mode)}
+        <box top={0} height="100%" left={0} width="100%" border={{ type: "line" }} style={style}>
+          {this.renderDetail(mode, data)}
         </box>
-        <box top={0} left={itemSize} width={`100%-${itemSize}`} label="Detail" border={{ type: 'line' }} style={style}>
-          <box left={0} width="20%">
-            {params[0].value}
-          </box>
-          <box left="20%" width="80%-2">
-            {activeRecords[0].sql}
-          </box>
+        <box top={0} height={1} left={2} width={itemSize * items.length + items.length + 1}>
+          |{this.renderTabs(1, mode)}
         </box>
       </box>
     );
