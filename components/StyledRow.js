@@ -1,5 +1,5 @@
-import _ from 'lodash';
-import React, { Component } from 'react';
+import _ from "lodash";
+import React, { Component } from "react";
 
 class StyledRow extends Component {
   render() {
@@ -18,7 +18,7 @@ class StyledRow extends Component {
         {columns.map((column, i) =>
           <box
             key={`row-${top}-${i}`}
-            {..._.pick(styles[i], 'left', 'width', 'align')}
+            {..._.pick(styles[i], "left", "width", "align")}
             content={column}
             style={styles[i]}
           />

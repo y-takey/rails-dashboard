@@ -5,17 +5,13 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "exe": "BUNDLE_GEMFILE=/Users/y_take_1207/workspace/dmy-rails/Gemfile ./node_modules/.bin/babel-node bin/rails-dashboard.js ../dmy-rails/bin/rails s"
+    "exe": "./node_modules/.bin/babel-node bin/rails-dashboard.js ../dmy-rails/bin/rails s"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/y-takey/rails-dashboard.git"
   },
-  "keywords": [
-    "react",
-    "rails",
-    "blessed"
-  ],
+  "keywords": ["react", "rails", "blessed"],
   "author": "y-takey",
   "license": "MIT",
   "bugs": {
@@ -38,11 +34,6 @@
     "lodash": "^4.17.4"
   },
   "babel": {
-    "presets": [
-      "es2015",
-      "stage-0",
-      "stage-2",
-      "react"
-    ]
+    "presets": ["es2015", "stage-0", "stage-2", "react"]
   }
 }

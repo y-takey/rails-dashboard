@@ -1,66 +1,75 @@
-import React, { Component } from 'react';
+import _ from "lodash";
+import React, { Component } from "react";
+import StyledRow from "./StyledRow";
 
-const header = ['date', 'status', 'method', 'url'];
-const style = {
-  border: { fg: 'white' },
-  header: { bg: 'cyan' },
-  cell: { fg: 'white', selected: { bg: 'green', fg: 'white' } }
-};
+const header = ["date", "status", "method", "url"];
 
 const containerOptions = {
-  ref: 'table',
-  border: { type: 'line' },
-  style: style
+  ref: "table",
+  border: { type: "line" },
+  width: "100%-2",
+  style: { border: { fg: "white" } }
 };
 
-const rows = data => {
-  return data.map(({ date, status, method, url }, index) => {
-    return (
-      <box top={index} key={`row-${index}`}>
-        <box left={0} width={11}>
-          {date}
-        </box>
-        <box left={11} width={4}>
-          {status}
-        </box>
-        <box left={15} width={4}>
-          {method}
-        </box>
-        <box left={19}>
-          {url}
-        </box>
-      </box>
-    );
-  });
+const format = num => {
+  const str = String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  return `${str} ms`.padStart(WIDTHS.respTime);
+};
+
+const WIDTHS = {
+  date: 14,
+  status: 3,
+  method: 6,
+  format: 4,
+  respTime: 10,
+  processor: 30,
+  url: null
+};
+
+const StatusColors = { 2: "green", 3: "blue", 4: "yellow", 5: "red" };
+
+const columns = (data, isSelected) => {
+  const padded = _.extend({}, data, { respTime: format(data.respTime) });
+
+  const cols = _.map(WIDTHS, (width, key) => (width ? padded[key].padEnd(width).substr(0, width) : padded[key]));
+
+  return isSelected ? [cols.join(" ")] : cols;
+};
+
+const styles = (status, isSelected) => {
+  if (isSelected) return [{ bg: "cyan", fg: "white" }];
+
+  return [
+    { bg: "", fg: "blue" },
+    { bg: "", fg: StatusColors[status[0]] },
+    { bg: "", fg: "white" },
+    { bg: "", fg: "white" },
+    { bg: "", fg: "magenta" },
+    { bg: "", fg: "white" },
+    { bg: "", fg: "" }
+  ];
+};
+
+const row = (data, i, selectedKey) => {
+  const isSelected = data.date === selectedKey;
+
+  return (
+    <StyledRow
+      key={`styled-request-${i}`}
+      top={i}
+      columns={columns(data, isSelected)}
+      styles={styles(data.status, isSelected)}
+    />
+  );
 };
 
 class RequestList extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = { selectedIndex: 0 };
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.state.selectedIndex === 0) return;
-
-    const diff = nextProps.data.length - this.props.data.length;
-    this.setState({ selectedIndex: this.state.selectedIndex + diff });
-  }
-
-  componentDidMount() {
-    this.setState({ rows: this.refs.table.height });
-  }
-
   render() {
-    const { top, height, data } = this.props;
+    const { top, height, data, selectedKey } = this.props;
 
     return (
-      <box top={top} height={height} {...containerOptions}>
-        {rows(data)}
-        <box top={4}>
-          rows:{this.state.rows}
-        </box>
+      <box top={top} height={height + 2} {...containerOptions}>
+        {data.map((record, i) => row(record, i, selectedKey))}
       </box>
     );
   }

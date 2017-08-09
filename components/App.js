@@ -2,6 +2,7 @@ import _ from "lodash";
 import events from "events";
 import React, { Component } from "react";
 import LogListener from "../lib/LogListener";
+import Booting from "./Booting";
 import ServerInfo from "./ServerInfo";
 import RequestList from "./RequestList";
 import RequestDetail from "./RequestDetail";
@@ -27,10 +28,16 @@ const containerOptions = {
 const initialState = {
   serverInfo: null,
   requests: [],
-  selectedNo: null,
+  selectedIndex: null,
   showDetail: false,
-  detailMode: "breakdown"
+  detailMode: "breakdown",
+  currentRangeStart: 0,
+  maxRow: 1,
+  halfRow: 1,
+  currentRow: 1
 };
+
+const allRequests = [];
 
 class App extends Component {
   constructor(props) {
@@ -38,9 +45,9 @@ class App extends Component {
 
     this.state = initialState;
 
-    this.onRailsStarted = this.onRailsStarted.bind(this);
-    this.onRailsRequested = this.onRailsRequested.bind(this);
-    this.onKeypress = this.onKeypress.bind(this);
+    ["onRailsStarted", "onRailsRequested", "onKeypress", "setMaxRow"].forEach(
+      func => (this[func] = this[func].bind(this))
+    );
 
     eventEmitter.on("started", this.onRailsStarted);
     eventEmitter.on("requested", this.onRailsRequested);
@@ -50,6 +57,7 @@ class App extends Component {
     const listener = new LogListener(eventEmitter);
     this.props.railsProc.stdout.on("data", listener.stdout);
     this.props.railsProc.stderr.on("data", listener.stderr);
+    this.setMaxRow();
   }
 
   onRailsStarted(serverInfo) {
@@ -57,32 +65,46 @@ class App extends Component {
   }
 
   onRailsRequested(data) {
-    this.setState({ requests: [data, ...this.state.requests] });
-  }
+    // this.setState({ requests: [data, ...this.state.requests] });
+    allRequests.push(data);
+    const { selectedIndex, showDetail } = this.state;
 
-  onSelectRow(_any, selectedIndex) {
-    this.setState({ selectedIndex });
+    if (!showDetail && selectedIndex === allRequests.length - 1) {
+      this.setState({ selectedIndex: allRequests.length - 1 });
+    }
+    this.setDisplayRange();
   }
 
   moveIndex(amount) {
-    let nextNo = this.state.selectedNo + amount;
-    let maxNo = this.state.requests.length;
+    let nextIndex = this.state.selectedIndex + amount;
+    let maxIndex = this.state.requests.length - 1;
 
-    if (nextNo < 1) {
-      nextNo = 1;
-    } else if (nextNo > maxNo) {
-      nextNo = maxNo;
+    if (nextIndex < 0) {
+      nextIndex = 0;
+    } else if (nextIndex > maxIndex) {
+      nextIndex = maxIndex;
     }
 
-    this.setState({ selectedNo: nextNo });
+    this.setState({ selectedIndex: nextIndex });
+    this.setDisplayRange();
   }
 
   changeMode(mode) {
+    if (allRequests.length === 0) return;
+
     this.setState({ showDetail: true, detailMode: mode });
+    this.setDisplayRange();
   }
 
   showDetail(enable) {
     this.setState({ showDetail: enable });
+    this.setDisplayRange();
+  }
+
+  setMaxRow() {
+    const maxRow = process.stdout.rows - 3;
+    this.setState({ maxRow, halfRow: Math.floor(maxRow / 2) - 1 });
+    this.setDisplayRange();
   }
 
   keyFunc(key) {
@@ -111,22 +133,45 @@ class App extends Component {
     if (func) func();
   }
 
+  // [1, 2, 3, 4, 5]
+  setDisplayRange() {
+    const { selectedIndex, showDetail, maxRow, halfRow, currentRangeStart } = this.state;
+    const currentRow = showDetail ? halfRow : maxRow;
+    let nextRangeStart;
+
+    if (selectedIndex < currentRangeStart) {
+      nextRangeStart = selectedIndex;
+    } else if (selectedIndex > currentRangeStart + currentRow) {
+      nextRangeStart = selectedIndex - currentRow;
+    } else {
+      nextRangeStart = currentRangeStart;
+    }
+    const requests = allRequests.slice(nextRangeStart, nextRangeStart + currentRow);
+
+    // console.log(`display range: from ${nextRangeStart} by ${currentRow}`);
+    this.setState({ requests, currentRow, currentRangeStart: nextRangeStart });
+  }
+
   render() {
-    const { serverInfo, requests, showDetail, detailMode, selectedNo } = this.state;
-    const showable = showDetail && selectedNo;
-    const listHeight = showable ? "50%-1" : "100%-1";
+    const { serverInfo, requests, showDetail, detailMode, selectedIndex, currentRow, halfRow } = this.state;
+
+    if (!serverInfo) return <Booting />;
+
+    // const showable = showDetail && selectedIndex;
+    // const listHeight = showable ? halfRow : maxRow;
+    const selectedData = allRequests[selectedIndex] || {};
     const detailProps = {
-      top: "50%",
-      height: "50%",
-      data: requests[selectedNo - 1],
+      top: halfRow + 3,
+      height: `100%-${halfRow + 3}`,
+      data: selectedData,
       mode: detailMode
     };
 
     return (
-      <box {...containerOptions} onKeypress={this.onKeypress}>
+      <box {...containerOptions} onKeypress={this.onKeypress} onResize={this.setMaxRow}>
         {serverInfo && <ServerInfo top={0} height={1} {...serverInfo} />}
-        <RequestList top={1} height={listHeight} data={requests} />
-        {showable && <RequestDetail {...detailProps} />}
+        <RequestList top={1} height={currentRow} data={requests} selectedKey={selectedData.date} />
+        {showDetail && <RequestDetail {...detailProps} />}
       </box>
     );
   }
