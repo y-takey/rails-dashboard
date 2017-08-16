@@ -22,7 +22,8 @@ const containerOptions = {
   keys: true,
   scrollable: true,
   mouse: true,
-  focused: true
+  focused: true,
+  width: "100%"
 };
 
 const initialState = {
@@ -77,7 +78,7 @@ class App extends Component {
 
   moveIndex(amount) {
     let nextIndex = this.state.selectedIndex + amount;
-    let maxIndex = this.state.requests.length - 1;
+    let maxIndex = allRequests.length - 1;
 
     if (nextIndex < 0) {
       nextIndex = 0;
@@ -169,7 +170,7 @@ class App extends Component {
 
     return (
       <box {...containerOptions} onKeypress={this.onKeypress} onResize={this.setMaxRow}>
-        {serverInfo && <ServerInfo top={0} height={1} {...serverInfo} />}
+        <ServerInfo top={0} height={1} {...serverInfo} />
         <RequestList top={1} height={currentRow} data={requests} selectedKey={selectedData.date} />
         {showDetail && <RequestDetail {...detailProps} />}
       </box>

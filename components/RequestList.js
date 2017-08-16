@@ -7,7 +7,8 @@ const header = ["date", "status", "method", "url"];
 const containerOptions = {
   ref: "table",
   border: { type: "line" },
-  width: "100%-2",
+  width: "100%",
+  // padding: { left: 1, right: 1 },
   style: { border: { fg: "white" } }
 };
 
@@ -69,7 +70,9 @@ class RequestList extends Component {
 
     return (
       <box top={top} height={height + 2} {...containerOptions}>
-        {data.map((record, i) => row(record, i, selectedKey))}
+        <box height="100%-2" width="100%-2">
+          {data.map((record, i) => row(record, i, selectedKey))}
+        </box>
       </box>
     );
   }
