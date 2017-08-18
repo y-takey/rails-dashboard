@@ -29,7 +29,7 @@ const containerOptions = {
 const initialState = {
   serverInfo: null,
   requests: [],
-  selectedIndex: null,
+  selectedIndex: 0,
   showDetail: false,
   detailMode: "breakdown",
   currentRangeStart: 0,
@@ -66,11 +66,10 @@ class App extends Component {
   }
 
   onRailsRequested(data) {
-    // this.setState({ requests: [data, ...this.state.requests] });
     allRequests.push(data);
     const { selectedIndex, showDetail } = this.state;
 
-    if (!showDetail && selectedIndex === allRequests.length - 1) {
+    if (selectedIndex === allRequests.length - 2) {
       this.setState({ selectedIndex: allRequests.length - 1 });
     }
     this.setDisplayRange();
@@ -134,7 +133,6 @@ class App extends Component {
     if (func) func();
   }
 
-  // [1, 2, 3, 4, 5]
   setDisplayRange() {
     const { selectedIndex, showDetail, maxRow, halfRow, currentRangeStart } = this.state;
     const currentRow = showDetail ? halfRow : maxRow;
@@ -142,14 +140,13 @@ class App extends Component {
 
     if (selectedIndex < currentRangeStart) {
       nextRangeStart = selectedIndex;
-    } else if (selectedIndex > currentRangeStart + currentRow) {
-      nextRangeStart = selectedIndex - currentRow;
+    } else if (selectedIndex >= currentRangeStart + currentRow) {
+      nextRangeStart = selectedIndex - currentRow + 1;
     } else {
       nextRangeStart = currentRangeStart;
     }
     const requests = allRequests.slice(nextRangeStart, nextRangeStart + currentRow);
 
-    // console.log(`display range: from ${nextRangeStart} by ${currentRow}`);
     this.setState({ requests, currentRow, currentRangeStart: nextRangeStart });
   }
 
@@ -158,8 +155,6 @@ class App extends Component {
 
     if (!serverInfo) return <Booting />;
 
-    // const showable = showDetail && selectedIndex;
-    // const listHeight = showable ? halfRow : maxRow;
     const selectedData = allRequests[selectedIndex] || {};
     const detailProps = {
       top: halfRow + 3,

@@ -6,7 +6,7 @@ const screen = blessed.screen({
   title: "Rails Dashboard"
 });
 
-screen.key(["q", "C-c"], function(ch, key) {
+screen.key(["C-c"], function(ch, key) {
   return process.exit(0);
 });
 
