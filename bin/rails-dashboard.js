@@ -1,13 +1,9 @@
 #!/usr/bin/env node
 
-import React from "react";
-import { render } from "react-blessed";
 import commander from "commander";
 import spawn from "cross-spawn";
 
-import App from "../components/App";
-import screen from "../components/screen";
-
+const main = process.env.NODE_ENV === "dev" ? require("../src/main") : require("../lib/main");
 const pkg = require("../package.json");
 const program = new commander.Command("rails-dashboard");
 
@@ -31,4 +27,4 @@ process.on("exit", () => {
   process.kill(process.platform === "win32" ? child.pid : -child.pid);
 });
 
-render(<App railsProc={child} />, screen);
+main(child);

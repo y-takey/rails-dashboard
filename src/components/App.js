@@ -1,7 +1,7 @@
 import _ from "lodash";
 import events from "events";
 import React, { Component } from "react";
-import LogListener from "../lib/LogListener";
+import LogListener from "../LogListener";
 import Booting from "./Booting";
 import ServerInfo from "./ServerInfo";
 import RequestList from "./RequestList";
