@@ -19,8 +19,8 @@ const itemSize = _.max(_.map(items, item => item.label.length));
 class RequestDetail extends Component {
   renderTabs(left, mode) {
     const ret = [];
-    const foo = items.forEach((item, i) => {
-      const style = item.key === mode ? { bg: "cyan" } : { bg: "" };
+    items.forEach((item, i) => {
+      const style = item.key === mode ? { bg: "cyan", fg: "white" } : { bg: "white", fg: "cyan" };
       ret.push(
         <text key={`tab-${i}`} left={left + (itemSize + 1) * i} width={itemSize} content={item.label} style={style} />
       );

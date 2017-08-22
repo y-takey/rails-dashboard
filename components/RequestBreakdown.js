@@ -3,7 +3,8 @@ import React, { Component } from "react";
 const labelStyle = { fg: "magenta", bold: true };
 
 const format = num => {
-  const str = String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
+  const roundedNum = Math.round(num * 10) / 10;
+  const str = String(roundedNum).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
   return `${str.padStart(7)} ms`;
 };
 
