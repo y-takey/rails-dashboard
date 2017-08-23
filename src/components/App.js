@@ -26,6 +26,7 @@ const containerOptions = {
   width: "100%"
 };
 
+const initialRow = process.stdout.rows - 3;
 const initialState = {
   serverInfo: null,
   requests: [],
@@ -33,8 +34,8 @@ const initialState = {
   showDetail: false,
   detailMode: "breakdown",
   currentRangeStart: 0,
-  maxRow: 1,
-  halfRow: 1,
+  maxRow: initialRow,
+  halfRow: initialRow,
   currentRow: 1
 };
 
@@ -52,6 +53,7 @@ class App extends Component {
 
     eventEmitter.on("started", this.onRailsStarted);
     eventEmitter.on("requested", this.onRailsRequested);
+    eventEmitter.on("error", this.onRailsError);
   }
 
   componentDidMount() {
@@ -73,6 +75,10 @@ class App extends Component {
       this.setState({ selectedIndex: allRequests.length - 1 });
     }
     this.setDisplayRange();
+  }
+
+  onRailsError() {
+    console.log("onRailsError");
   }
 
   moveIndex(amount) {
@@ -117,6 +123,7 @@ class App extends Component {
         up,
         j: down,
         k: up,
+        l: _.partial(this.changeMode, "log").bind(this),
         b: _.partial(this.changeMode, "breakdown").bind(this),
         p: _.partial(this.changeMode, "params").bind(this),
         a: _.partial(this.changeMode, "activerecord").bind(this),
@@ -151,7 +158,16 @@ class App extends Component {
   }
 
   render() {
-    const { serverInfo, requests, showDetail, detailMode, selectedIndex, currentRow, halfRow } = this.state;
+    const {
+      serverInfo,
+      requests,
+      showDetail,
+      detailMode,
+      selectedIndex,
+      currentRangeStart,
+      currentRow,
+      halfRow
+    } = this.state;
 
     if (!serverInfo) return <Booting />;
 
@@ -166,7 +182,7 @@ class App extends Component {
     return (
       <box {...containerOptions} onKeypress={this.onKeypress} onResize={this.setMaxRow}>
         <ServerInfo top={0} height={1} {...serverInfo} />
-        <RequestList top={1} height={currentRow} data={requests} selectedKey={selectedData.date} />
+        <RequestList top={1} height={currentRow} data={requests} selectedNo={selectedIndex - currentRangeStart} />
         {showDetail && <RequestDetail {...detailProps} />}
       </box>
     );

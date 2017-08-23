@@ -36,6 +36,7 @@ class LogListener {
   constructor(eventEmitter) {
     this.eventEmitter = eventEmitter;
     this.stdout = this.stdout.bind(this);
+    this.stderr = this.stderr.bind(this);
   }
 
   stdout(data) {
@@ -58,7 +59,7 @@ class LogListener {
   }
 
   stderr(data) {
-    this.eventEmitter.emit("logged", data.toString().trim());
+    this.eventEmitter.emit("error", data.toString().trim());
   }
 }
 

@@ -51,8 +51,8 @@ const styles = (status, isSelected) => {
   ];
 };
 
-const row = (data, i, selectedKey) => {
-  const isSelected = data.date === selectedKey;
+const row = (data, i, selectedNo) => {
+  const isSelected = i === selectedNo;
 
   return (
     <StyledRow
@@ -66,12 +66,12 @@ const row = (data, i, selectedKey) => {
 
 class RequestList extends Component {
   render() {
-    const { top, height, data, selectedKey } = this.props;
+    const { top, height, data, selectedNo } = this.props;
 
     return (
       <box top={top} height={height + 2} {...containerOptions}>
         <box height="100%-2" width="100%-2">
-          {data.map((record, i) => row(record, i, selectedKey))}
+          {data.map((record, i) => row(record, i, selectedNo))}
         </box>
       </box>
     );

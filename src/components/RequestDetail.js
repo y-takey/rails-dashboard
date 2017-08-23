@@ -4,6 +4,7 @@ import RequestBreakdown from "./RequestBreakdown";
 import RequestParams from "./RequestParams";
 import RequestActiveRecord from "./RequestActiveRecord";
 import RequestRendering from "./RequestRendering";
+import RequestLog from "./RequestLog";
 
 const style = { fg: "white", border: { fg: "white" } };
 
@@ -11,7 +12,8 @@ const items = [
   { key: "breakdown", label: " Breakdown [b] ", component: RequestBreakdown },
   { key: "params", label: " Params [p] ", component: RequestParams },
   { key: "activerecord", label: " ActiveRecord [a] ", component: RequestActiveRecord },
-  { key: "rendering", label: " Rendering [r] ", component: RequestRendering }
+  { key: "rendering", label: " Rendering [r] ", component: RequestRendering },
+  { key: "log", label: " Log [l] ", component: RequestLog }
 ];
 
 const itemSize = _.max(_.map(items, item => item.label.length));

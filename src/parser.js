@@ -52,7 +52,7 @@ const TYPES = {
     return line.startsWith("Parameters: ");
   },
   [SQL]: line => {
-    return !!line.match(/(.*)\((.+)ms\) (.+)/);
+    return !!line.match(/(.*)\((.+)ms\) .+/);
   },
   [PROCESSING]: line => {
     return line.startsWith("Processing ");
@@ -64,6 +64,7 @@ const TYPES = {
 
 let serverInfo;
 let processInfo = null;
+let prevProcessInfo = null;
 
 const PROCESSOR = {
   [BOOTING]: line => {
@@ -106,7 +107,9 @@ const PROCESSOR = {
       date: ret[3],
       params: [],
       activeRecords: [],
-      renderings: []
+      renderings: [],
+      logs: [],
+      pushed: false
     };
   },
   [PARAMS]: line => {
@@ -147,20 +150,25 @@ const PROCESSOR = {
   [RESPONSE]: line => {
     if (!processInfo) return;
 
-    let ret = line.match(/Completed (\d+) \S+ in ([\d\.]+)ms \(Views: ([\d\.]+)ms . ActiveRecord: ([\d\.]+)ms\)/);
+    let ret = line.match(/Completed (\d+) .+ in ([\d\.]+)ms (.*)/);
 
     if (!ret) return;
 
+    const detailTimes = ret[3];
+    const renderingTime = detailTimes.match(/Views: ([\d\.]+)ms/);
+    const sqlTime = detailTimes.match(/ActiveRecord: ([\d\.]+)ms/);
+
     Object.assign(processInfo, {
       status: ret[1],
-      respTime: Number(ret[2]),
-      renderingTime: Number(ret[3]),
-      sqlTime: Number(ret[4])
+      respTime: Number(ret[2] || 0),
+      renderingTime: Number((renderingTime && renderingTime[1]) || 0),
+      sqlTime: Number((sqlTime && sqlTime[1]) || 0)
     });
 
-    const info = processInfo;
+    prevProcessInfo = processInfo;
+    prevProcessInfo.pushed = true;
     processInfo = null;
-    return { type: "requested", data: info };
+    return { type: "requested", data: prevProcessInfo };
   }
 };
 
@@ -176,9 +184,14 @@ const parse = buffer => {
   const ret = lines.map(line => {
     const l = removeANSIstyles(line).trim();
     const type = logType(l);
-    if (!type) return;
+    let foo = null;
+    if (type) {
+      foo = PROCESSOR[type](l);
+    }
 
-    return PROCESSOR[type](l);
+    const target = processInfo || prevProcessInfo;
+    if (target) target.logs.push(l);
+    return foo;
   });
   return _.last(_.compact(ret));
 };
