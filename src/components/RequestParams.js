@@ -17,7 +17,7 @@ class RequestParams extends Component {
               height={1}
               left={0}
               width={maxNameLength + 3}
-              content={`${name.padStart(maxNameLength)} : `}
+              content={`${_.padStart(name, maxNameLength)} : `}
               style={labelStyle}
             />,
             <box top={i + 1} height={1} left={maxNameLength + 3} width={`100%-${maxNameLength + 3}`} content={value} />

@@ -12,6 +12,7 @@ NODE_ENV=dev ../rails-dashboard/node_modules/.bin/babel-node ../rails-dashboard/
 ```
 
 
+
 ```json
 "babel-plugin-transform-modern-regexp": "^0.0.4",
 "plugins": ["transform-modern-regexp"]

@@ -14,7 +14,7 @@ const containerOptions = {
 
 const format = num => {
   const str = String(num).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
-  return `${str} ms`.padStart(WIDTHS.respTime);
+  return _.padStart(`${str} ms`, WIDTHS.respTime);
 };
 
 const WIDTHS = {
@@ -32,7 +32,7 @@ const StatusColors = { 2: "green", 3: "blue", 4: "yellow", 5: "red" };
 const columns = (data, isSelected) => {
   const padded = _.extend({}, data, { respTime: format(data.respTime) });
 
-  const cols = _.map(WIDTHS, (width, key) => (width ? padded[key].padEnd(width).substr(0, width) : padded[key]));
+  const cols = _.map(WIDTHS, (width, key) => (width ? _.padEnd(padded[key], width).substr(0, width) : padded[key]));
 
   return isSelected ? [cols.join(" ")] : cols;
 };

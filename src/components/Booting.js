@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { Component } from "react";
 
 const Spinner = ".";
@@ -29,7 +30,7 @@ class Booting extends Component {
 
   render() {
     const counter = this.state.counter;
-    const spinner = Spinner.repeat(counter % MaxSpinner).padEnd(MaxSpinner);
+    const spinner = _.padEnd(Spinner.repeat(counter % MaxSpinner), MaxSpinner);
 
     return <box {...containerProps} content={`Booting${spinner}`} />;
   }
