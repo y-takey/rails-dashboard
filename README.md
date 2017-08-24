@@ -27,7 +27,6 @@ blue
 magenta
 cyan
 white
-gray
 
 redBright
 greenBright
@@ -99,12 +98,12 @@ stdout data: Completed 200 OK in 652ms (Views: 621.2ms | ActiveRecord: 0.5ms)
 
 # TODO
 
-  * [] adjust the color
+  * [x] adjust the color
   * [x] improve selected index
-  * [] improve server info
-  * [] suport keys with `g` (to top), `G` (to bottom), `space` (scroll a page)
+  * [x] improve server info
+  * [x] suport keys with `g` (to top), `G` (to bottom), `space` (scroll a page)
   * [x] suport redirect
-  * [] cacth 4xx, 5xx
+  * [x] cacth 4xx, 5xx
   * [] building
   * [] switch the stub by a env-var
 
@@ -134,3 +133,5 @@ Processing by UsersController#destroy as HTML
 Redirected to http://localhost:3000/users
 Completed 302 Found in 7ms (ActiveRecord: 2.6ms)
 ```
+
+<%=# @books, partial: 'books/book', as: :book %>

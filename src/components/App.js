@@ -9,14 +9,6 @@ import RequestDetail from "./RequestDetail";
 
 const eventEmitter = new events.EventEmitter();
 
-const dmyServerInfo = {
-  webServer: "Puma",
-  railsVersion: "5.1.2",
-  url: "http://localhost:3000",
-  webServerVersion: "3.9.2",
-  rubyVersion: "2.2.1p100"
-};
-
 const containerOptions = {
   vi: true,
   keys: true,
@@ -36,7 +28,7 @@ const initialState = {
   currentRangeStart: 0,
   maxRow: initialRow,
   halfRow: initialRow,
-  currentRow: 1
+  currentRow: initialRow
 };
 
 const allRequests = [];
@@ -82,7 +74,10 @@ class App extends Component {
   }
 
   moveIndex(amount) {
-    let nextIndex = this.state.selectedIndex + amount;
+    this.move(this.state.selectedIndex + amount);
+  }
+
+  move(nextIndex) {
     let maxIndex = allRequests.length - 1;
 
     if (nextIndex < 0) {
@@ -93,6 +88,17 @@ class App extends Component {
 
     this.setState({ selectedIndex: nextIndex });
     this.setDisplayRange();
+  }
+
+  moveToEdge(key) {
+    this.move(key.shift ? allRequests.length - 1 : 0);
+  }
+
+  movePage(key) {
+    const { selectedIndex, currentRow } = this.state;
+    const amount = key.shift ? currentRow * -1 : currentRow;
+
+    this.move(selectedIndex + amount);
   }
 
   changeMode(mode) {
@@ -123,11 +129,13 @@ class App extends Component {
         up,
         j: down,
         k: up,
+        g: this.moveToEdge.bind(this),
         l: _.partial(this.changeMode, "log").bind(this),
         b: _.partial(this.changeMode, "breakdown").bind(this),
         p: _.partial(this.changeMode, "params").bind(this),
         a: _.partial(this.changeMode, "activerecord").bind(this),
         r: _.partial(this.changeMode, "rendering").bind(this),
+        space: this.movePage.bind(this),
         enter: _.partial(this.showDetail, true).bind(this),
         escape: _.partial(this.showDetail, false).bind(this)
       };
@@ -137,7 +145,7 @@ class App extends Component {
 
   onKeypress(_char, key) {
     const func = this.keyFunc(key.name);
-    if (func) func();
+    if (func) func(key);
   }
 
   setDisplayRange() {

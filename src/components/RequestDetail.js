@@ -6,7 +6,9 @@ import RequestActiveRecord from "./RequestActiveRecord";
 import RequestRendering from "./RequestRendering";
 import RequestLog from "./RequestLog";
 
-const style = { fg: "white", border: { fg: "white" } };
+const boxStyle = { fg: "white", border: { fg: "white" } };
+const tabStyle = { bg: "", fg: "white" };
+const selectedTabStyle = { bg: "cyan", fg: "white", bold: true };
 
 const items = [
   { key: "breakdown", label: " Breakdown [b] ", component: RequestBreakdown },
@@ -22,7 +24,7 @@ class RequestDetail extends Component {
   renderTabs(left, mode) {
     const ret = [];
     items.forEach((item, i) => {
-      const style = item.key === mode ? { bg: "cyan", fg: "white" } : { bg: "white", fg: "cyan" };
+      const style = item.key === mode ? selectedTabStyle : tabStyle;
       ret.push(
         <text key={`tab-${i}`} left={left + (itemSize + 1) * i} width={itemSize} content={item.label} style={style} />
       );
@@ -42,7 +44,7 @@ class RequestDetail extends Component {
 
     return (
       <box top={top} height={height} left="0" width="100%">
-        <box top={0} height="100%" left={0} width="100%" border={{ type: "line" }} style={style}>
+        <box top={0} height="100%" left={0} width="100%" border={{ type: "line" }} style={boxStyle}>
           {this.renderDetail(mode, data)}
         </box>
         <box top={0} height={1} left={2} width={itemSize * items.length + items.length + 1}>

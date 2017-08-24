@@ -5,7 +5,7 @@ class RequestLog extends Component {
     const { logs } = this.props.data;
 
     return (
-      <box top={0} height="100%-2" left={0} width="100%-2">
+      <box top={0} height="100%-2" left={0} width="100%-2" scrollable={true}>
         {logs.join("\n")}
       </box>
     );

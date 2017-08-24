@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import commander from "commander";
-import spawn from "cross-spawn";
+const commander = require("commander");
+const spawn = require("cross-spawn");
 
 const main = process.env.NODE_ENV === "dev" ? require("../src/main") : require("../lib/main");
 const pkg = require("../package.json");

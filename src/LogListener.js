@@ -2,6 +2,14 @@ import _ from "lodash";
 import parse from "./parser";
 
 // for test ////////////////////
+const dmyServerInfo = {
+  webServer: "Puma",
+  railsVersion: "5.1.2",
+  url: "http://localhost:3000",
+  webServerVersion: "3.9.2",
+  rubyVersion: "2.2.1p100"
+};
+
 const dmyParams = [{ name: "foo", value: "hoge" }, { name: "bar", value: "fuga" }];
 const dmyActiveRecords = [
   {
