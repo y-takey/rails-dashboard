@@ -1,6 +1,6 @@
 {
   "name": "rails-dashboard",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "bin": "bin/rails-dashboard.js",
   "main": "index.js",
