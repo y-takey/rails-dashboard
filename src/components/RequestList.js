@@ -38,16 +38,16 @@ const columns = (data, isSelected) => {
 };
 
 const styles = (status, isSelected) => {
-  if (isSelected) return [{ bg: "cyan", fg: "white" }];
+  if (isSelected) return [{ bg: "cyan", fg: "white", bold: true }];
 
   return [
-    { bg: "", fg: "blue" },
-    { bg: "", fg: StatusColors[status[0]] },
-    { bg: "", fg: "white" },
-    { bg: "", fg: "white" },
-    { bg: "", fg: "magenta" },
-    { bg: "", fg: "white" },
-    { bg: "", fg: "" }
+    { bg: "", fg: "blue", bold: false },
+    { bg: "", fg: StatusColors[status[0]], bold: true },
+    { bg: "", fg: "white", bold: false },
+    { bg: "", fg: "white", bold: false },
+    { bg: "", fg: "magenta", bold: false },
+    { bg: "", fg: "white", bold: false },
+    { bg: "", fg: "", bold: false }
   ];
 };
 
