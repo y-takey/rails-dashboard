@@ -1,12 +1,13 @@
 {
   "name": "rails-dashboard",
-  "version": "0.0.4",
+  "version": "0.1.2",
   "description": "",
   "bin": "bin/rails-dashboard.js",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src --out-dir lib"
+    "build": "babel src --out-dir lib",
+    "prepare": "yarn build"
   },
   "repository": {
     "type": "git",
@@ -15,7 +16,8 @@
   "keywords": [
     "react",
     "rails",
-    "blessed"
+    "blessed",
+    "dev-tool"
   ],
   "author": "y-takey",
   "license": "MIT",

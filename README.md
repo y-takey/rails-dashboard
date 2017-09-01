@@ -43,7 +43,7 @@ key | desc
 * recommended terminal window size is 100 cols * 30 rows higher.
 * current supported Rails is version 5.1 and using Puma. but if there is no difference in format of the log, maybe works fine. If don't works fine, send the log to me please.
 
-## Inpired by
+## Inspired by
 
 * [RailsPanel](https://github.com/dejan/rails_panel) : RailsPanel is a Chrome extension for Rails development that will end your tailing of development.log
 * [webpack-dashboard](https://github.com/FormidableLabs/webpack-dashboard) : A CLI dashboard for your webpack dev server.
