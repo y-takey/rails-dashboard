@@ -3,7 +3,8 @@
 const commander = require("commander");
 const spawn = require("cross-spawn");
 
-const main = process.env.NODE_ENV === "dev" ? require("../src/main") : require("../lib/main");
+const main =
+  process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "dmy" ? require("../src/main") : require("../lib/main");
 const pkg = require("../package.json");
 const program = new commander.Command("rails-dashboard");
 

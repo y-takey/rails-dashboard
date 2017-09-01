@@ -2,12 +2,16 @@ import _ from "lodash";
 import events from "events";
 import React, { Component } from "react";
 import LogListener from "../LogListener";
+import generateTestLog from "../TestLogGenerator";
 import Booting from "./Booting";
 import ServerInfo from "./ServerInfo";
 import RequestList from "./RequestList";
 import RequestDetail from "./RequestDetail";
 
 const eventEmitter = new events.EventEmitter();
+
+// for TEST
+if (process.env.NODE_ENV === "dmy") generateTestLog(eventEmitter);
 
 const containerOptions = {
   vi: true,
