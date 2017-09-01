@@ -47,8 +47,20 @@ const child = spawn(command, args, {
   detached: true
 });
 
+let messages = [];
+
+process.on("warning", data => {
+  messages.push(data.message);
+  process.exit(0);
+});
+
 process.on("exit", () => {
-  process.kill(process.platform === "win32" ? child.pid : -child.pid);
+  if (messages.length) console.log(messages.join("\n"));
+  try {
+    process.kill(process.platform === "win32" ? child.pid : -child.pid);
+  } catch (e) {
+    // throw. because if rails failed booting, child process is not exists
+  }
 });
 
 main(child);

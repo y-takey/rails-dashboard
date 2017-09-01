@@ -73,8 +73,8 @@ class App extends Component {
     this.setDisplayRange();
   }
 
-  onRailsError() {
-    console.log("onRailsError");
+  onRailsError(message) {
+    process.emitWarning(message);
   }
 
   moveIndex(amount) {
