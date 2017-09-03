@@ -80,4 +80,7 @@ For bugs and feature requests, [please create an issue](https://github.com/y-tak
 ```
 $ cd your/rails/project/path  # e.g. cd dmy-rails
 $ NODE_ENV=dev ../rails-dashboard/node_modules/.bin/babel-node ../rails-dashboard/bin/rails-dashboard.js bin/rails s
+
+# or to generate dummy request, use this
+$ NODE_ENV=dmy ../rails-dashboard/node_modules/.bin/babel-node ../rails-dashboard/bin/rails-dashboard.js bin/rails s
 ```
