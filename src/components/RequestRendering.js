@@ -9,6 +9,8 @@ const durationHeaderStyle = { fg: "yellow" };
 const viewHeaderStyle = { fg: "magenta" };
 
 const containerStyle = {
+  scrollable: true,
+  mouse: true,
   padding: { top: 1, left: 2, right: 2 }
 };
 
