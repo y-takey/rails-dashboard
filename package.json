@@ -39,8 +39,7 @@
     "cross-spawn": "^5.1.0",
     "lodash": "^4.17.4",
     "react": "0.14.0",
-    "react-blessed": "^0.1.8",
-    "slice-ansi": "^1.0.0"
+    "react-blessed": "^0.1.8"
   },
   "babel": {
     "presets": [
