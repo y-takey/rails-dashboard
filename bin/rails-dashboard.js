@@ -7,6 +7,7 @@ const main =
   process.env.NODE_ENV === "dev" || process.env.NODE_ENV === "dmy" ? require("../src/main") : require("../lib/main");
 const pkg = require("../package.json");
 const program = new commander.Command("rails-dashboard");
+const updateCheck = require("./self-update-checker");
 
 program.version(pkg.version);
 // program.option("-c, --color [color]", "Dashboard color");
@@ -54,8 +55,13 @@ process.on("warning", data => {
   process.exit(0);
 });
 
+let selfVersionCheck = [];
+setImmediate(updateCheck, pkg.version, selfVersionCheck);
+
 process.on("exit", () => {
   if (messages.length) console.log(messages.join("\n"));
+  if (selfVersionCheck.length) console.log(selfVersionCheck.join("\n"));
+
   try {
     process.kill(process.platform === "win32" ? child.pid : -child.pid);
   } catch (e) {
