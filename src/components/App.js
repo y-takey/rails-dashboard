@@ -14,11 +14,8 @@ const eventEmitter = new events.EventEmitter();
 if (process.env.NODE_ENV === "dmy") generateTestLog(eventEmitter);
 
 const containerOptions = {
-  vi: true,
-  keys: true,
-  scrollable: true,
-  mouse: true,
-  focused: true,
+  mouse: false,
+  scrollable: false,
   width: "100%"
 };
 
@@ -148,6 +145,9 @@ class App extends Component {
   }
 
   onKeypress(_char, key) {
+    // disable ↑,↓ and mouse while show the detail
+    if (this.state.showDetail && !_char) return;
+
     const func = this.keyFunc(key.name);
     if (func) func(key);
   }
@@ -190,12 +190,20 @@ class App extends Component {
       data: selectedData,
       mode: detailMode
     };
+    const focused = !showDetail;
 
     return (
-      <box {...containerOptions} onKeypress={this.onKeypress} onResize={this.setMaxRow}>
+      <box {...containerOptions} onResize={this.setMaxRow}>
         <ServerInfo top={0} height={1} {...serverInfo} />
-        <RequestList top={1} height={currentRow} data={requests} selectedNo={selectedIndex - currentRangeStart} />
-        {showDetail && <RequestDetail {...detailProps} />}
+        <RequestList
+          top={1}
+          height={currentRow}
+          onKeypress={this.onKeypress}
+          showDetail={showDetail}
+          data={requests}
+          selectedNo={selectedIndex - currentRangeStart}
+        />
+        {showDetail && <RequestDetail onKeypress={this.onKeypress} {...detailProps} />}
       </box>
     );
   }

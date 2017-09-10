@@ -6,6 +6,7 @@ const header = ["date", "status", "method", "url"];
 
 const containerOptions = {
   ref: "table",
+  mouse: false,
   border: { type: "line" },
   width: "100%",
   // padding: { left: 1, right: 1 },
@@ -66,10 +67,18 @@ const row = (data, i, selectedNo) => {
 
 class RequestList extends Component {
   render() {
-    const { top, height, data, selectedNo } = this.props;
+    const { top, height, onKeypress, showDetail, data, selectedNo } = this.props;
 
     return (
-      <box top={top} height={height + 2} {...containerOptions}>
+      <box
+        top={top}
+        keys={!showDetail}
+        height={height + 2}
+        scrollable={!showDetail}
+        onKeypress={onKeypress}
+        focused={!showDetail}
+        {...containerOptions}
+      >
         <box height="100%-2" width="100%-2">
           {data.map((record, i) => row(record, i, selectedNo))}
         </box>

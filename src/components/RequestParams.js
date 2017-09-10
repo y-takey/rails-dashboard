@@ -9,7 +9,7 @@ class RequestParams extends Component {
 
     const maxNameLength = _.max(params.map(param => param.name.length)) + 1;
     return (
-      <box top={0} height="100%-2" left={0} width="100%-2" scrollable={true} mouse={true}>
+      <text top={0} height="100%-2" left={0} width="100%-2">
         {params.map(({ name, value }, i) => {
           return [
             <box
@@ -23,7 +23,7 @@ class RequestParams extends Component {
             <box top={i + 1} height={1} left={maxNameLength + 3} width={`100%-${maxNameLength + 3}`} content={value} />
           ];
         })}
-      </box>
+      </text>
     );
   }
 }
