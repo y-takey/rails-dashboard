@@ -39,14 +39,26 @@ class RequestDetail extends Component {
   }
 
   render() {
-    const { top, height, mode, data } = this.props;
+    const { top, height, mode, onKeypress, data } = this.props;
     const { params, activeRecords, renderings } = data;
 
     return (
       <box top={top} height={height} left="0" width="100%">
-        <box top={0} height="100%" left={0} width="100%" border={{ type: "line" }} style={boxStyle}>
+        <text
+          top={0}
+          height="100%"
+          left={0}
+          width="100%"
+          border={{ type: "line" }}
+          style={boxStyle}
+          focused={true}
+          scrollable={true}
+          mouse={false}
+          keys={true}
+          onKeypress={onKeypress}
+        >
           {this.renderDetail(mode, data)}
-        </box>
+        </text>
         <box top={0} height={1} left={2} width={itemSize * items.length + items.length + 1}>
           |{this.renderTabs(1, mode)}
         </box>

@@ -10,8 +10,6 @@ const durationHeaderStyle = { fg: "yellow" };
 const sqlHeaderStyle = { fg: "magenta" };
 
 const containerStyle = {
-  scrollable: true,
-  mouse: true,
   padding: { top: 1, left: 2, right: 2 }
 };
 
@@ -23,7 +21,7 @@ class RequestActiveRecord extends Component {
     if (othersTime < 0) othersTime = 0;
 
     return (
-      <box top={0} height="100%-2" left={0} width="100%-6" {...containerStyle}>
+      <text top={0} height="100%-2" left={0} width="100%-6" {...containerStyle}>
         <StyledRow
           top={0}
           columns={["Total ", formatter.ms(sqlTime), `${activeRecords.length} SQL`]}
@@ -46,7 +44,7 @@ class RequestActiveRecord extends Component {
           columns={["Others ", formatter.ms(othersTime)]}
           styles={[{ width: maxTypeLength, ...typeStyle }, durationStyle]}
         />
-      </box>
+      </text>
     );
   }
 }

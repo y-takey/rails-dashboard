@@ -9,8 +9,6 @@ const durationHeaderStyle = { fg: "yellow" };
 const viewHeaderStyle = { fg: "magenta" };
 
 const containerStyle = {
-  scrollable: true,
-  mouse: true,
   padding: { top: 1, left: 2, right: 2 }
 };
 
@@ -22,7 +20,7 @@ class RequestRendering extends Component {
     if (othersTime < 0) othersTime = 0;
 
     return (
-      <box top={0} height="100%-2" left={0} width="100%-6" {...containerStyle}>
+      <text top={0} height="100%-2" left={0} width="100%-6" {...containerStyle}>
         <StyledRow
           top={0}
           columns={["Total", formatter.ms(renderingTime), `${renderings.length} View`]}
@@ -45,7 +43,7 @@ class RequestRendering extends Component {
           columns={["Others", formatter.ms(othersTime)]}
           styles={[{ width: maxViewLength, ...typeStyle }, durationStyle]}
         />
-      </box>
+      </text>
     );
   }
 }
