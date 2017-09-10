@@ -5,6 +5,29 @@ This application is dev-tool for rails, to improve your rails log.
 
 ![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/demo.gif)
 
+##### Breakdown View
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-0-breakdown.png)
+
+##### Params View
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-1-param.png)
+
+##### ActiveRecords View
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-2-sql-2.png)
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-2-sql-1.png)
+
+##### Renderings View
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-3-view.png)
+
+##### (Raw) Log View
+
+![demo](https://raw.githubusercontent.com/y-takey/rails-dashboard/master/demo/img-4-log.png)
+
+
 ## Usage
 
 ```
