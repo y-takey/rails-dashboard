@@ -19,7 +19,7 @@ const logBox = blessed.box({
   width: "100%",
   height: 5,
   scrollable: true,
-  mouse: true,
+  keys: true,
   tags: true,
   border: {
     type: "line"
@@ -35,6 +35,24 @@ const log = text => {
 
 // -----------------------------------------------
 
+const content = `01: Hello
+02: World
+03: one
+04: two
+05: three
+06: four
+07: five
+08: six
+09: seven
+10: eight
+11: nine
+12: {red-fg}ten{/red-fg}
+13: eleven
+14: twelve
+15: tirteen
+16: fourteen
+17: fifteen!`;
+
 const box = blessed.scrollablebox({
   label: " EX ",
   padding: 1,
@@ -42,14 +60,13 @@ const box = blessed.scrollablebox({
   left: "center",
   width: "50%",
   height: "25%",
-  content:
-    "Hello\nWorld\none\ntwo\nthree\nfour\nfive\nsix\nseven\neight\nnine\n{red-fg}ten{/red-fg}\neleven\ntwelve\ntirteen\nfourteen\nfifteen!",
+  content,
   border: {
     type: "line"
   },
   tags: true,
   scrollable: true,
-  mouse: true
+  keys: true
 });
 
 screen.append(box);
@@ -59,4 +76,4 @@ box.focus();
 // -----------------------------------------------
 
 screen.render();
-log("initialized!");
+log("initialized!\nfoo\nbar\nbaz\nhoge\nfuga");
