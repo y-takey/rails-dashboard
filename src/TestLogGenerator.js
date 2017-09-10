@@ -1,6 +1,3 @@
-// import _ from "lodash";
-// import parse from "./parser";
-
 // for test ////////////////////
 const dmyServerInfo = {
   webServer: "Puma",
@@ -66,13 +63,14 @@ const dmyData = {
   logs: dmyLogs
 };
 
-// generate 1request per 3sec.
+// generate 1request per 1sec.
 const SPEED = 1000;
+const MAX_COUNT = 40;
+let intervalId;
+let count = 0;
 
 export default eventEmitter => {
-  // if (ret && !this.interval) {
-  //   this.interval = true;
-  setInterval(() => {
+  intervalId = setInterval(() => {
     const sec = new Date().getSeconds();
     const status = sec % 3 === 0 ? "422" : sec % 5 === 0 ? "500" : "200";
     const dmy = Object.assign({}, dmyData, {
@@ -80,6 +78,8 @@ export default eventEmitter => {
       status: status
     });
     eventEmitter.emit("requested", dmy);
+
+    if (++count >= MAX_COUNT) clearInterval(intervalId);
   }, SPEED);
   // }
 };
