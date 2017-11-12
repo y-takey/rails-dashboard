@@ -21,6 +21,10 @@ const items = [
 const itemSize = _.max(_.map(items, item => item.label.length));
 
 class RequestDetail extends Component {
+  scroll(amount) {
+    this.refs.detail.scroll(amount);
+  }
+
   renderTabs(left, mode) {
     const ret = [];
     items.forEach((item, i) => {
@@ -34,8 +38,8 @@ class RequestDetail extends Component {
   }
 
   renderDetail(mode, data) {
-    const foo = _.find(items, item => item.key === mode);
-    return <foo.component data={data} />;
+    const targetItem = _.find(items, item => item.key === mode);
+    return <targetItem.component data={data} ref="detail" />;
   }
 
   render() {

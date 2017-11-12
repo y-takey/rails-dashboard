@@ -13,6 +13,10 @@ const containerStyle = {
 };
 
 class RequestRendering extends Component {
+  scroll(amount) {
+    // nope
+  }
+
   render() {
     const { renderingTime, renderings } = this.props.data;
     const maxViewLength = _.max(renderings.map(({ view }) => view.length)) || 7;

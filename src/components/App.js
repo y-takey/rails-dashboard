@@ -29,7 +29,8 @@ const initialState = {
   currentRangeStart: 0,
   maxRow: initialRow,
   halfRow: initialRow,
-  currentRow: initialRow
+  currentRow: initialRow,
+  subviewScroll: null
 };
 
 const allRequests = [];
@@ -74,8 +75,12 @@ class App extends Component {
     process.emitWarning(message);
   }
 
-  moveIndex(amount) {
-    this.move(this.state.selectedIndex + amount);
+  moveIndex(amount, key) {
+    if (key.shift) {
+      this.scrollSubview(amount);
+    } else {
+      this.move(this.state.selectedIndex + amount);
+    }
   }
 
   move(nextIndex) {
@@ -89,6 +94,17 @@ class App extends Component {
 
     this.setState({ selectedIndex: nextIndex });
     this.setDisplayRange();
+  }
+
+  scrollSubview(amount) {
+    let actualAmount;
+    if (this.state.subviewScroll === amount) {
+      actualAmount = amount;
+    } else {
+      this.setState({ subviewScroll: amount });
+      actualAmount = (this.state.maxRow - this.state.halfRow - 2) * amount;
+    }
+    this.refs.detail.scroll(actualAmount);
   }
 
   moveToEdge(key) {
@@ -166,7 +182,7 @@ class App extends Component {
     }
     const requests = allRequests.slice(nextRangeStart, nextRangeStart + currentRow);
 
-    this.setState({ requests, currentRow, currentRangeStart: nextRangeStart });
+    this.setState({ requests, currentRow, currentRangeStart: nextRangeStart, subviewScroll: null });
   }
 
   render() {
@@ -203,7 +219,7 @@ class App extends Component {
           data={requests}
           selectedNo={selectedIndex - currentRangeStart}
         />
-        {showDetail && <RequestDetail onKeypress={this.onKeypress} {...detailProps} />}
+        {showDetail && <RequestDetail onKeypress={this.onKeypress} ref="detail" {...detailProps} />}
       </box>
     );
   }

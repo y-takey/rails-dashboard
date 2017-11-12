@@ -70,6 +70,26 @@ const box = blessed.scrollablebox({
 });
 
 screen.append(box);
+let state = null;
+
+const scroll = amount => {
+  if (state === amount) {
+    box.scroll(amount);
+  } else {
+    state = amount;
+    box.scroll(3 * amount);
+  }
+};
+
+screen.key(["j"], function(ch, key) {
+  log("shift");
+  scroll(1);
+});
+
+screen.key(["k"], function(ch, key) {
+  log("unshift");
+  scroll(-1);
+});
 
 box.focus();
 
