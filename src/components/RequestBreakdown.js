@@ -4,6 +4,10 @@ import formatter from "../formatter";
 const labelStyle = { fg: "magenta", bold: true };
 
 class RequestBreakdown extends Component {
+  scroll(amount) {
+    // nope
+  }
+
   render() {
     const { respTime, sqlTime, renderingTime } = this.props.data;
 

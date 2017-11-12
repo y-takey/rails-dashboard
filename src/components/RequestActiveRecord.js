@@ -14,6 +14,10 @@ const containerStyle = {
 };
 
 class RequestActiveRecord extends Component {
+  scroll(amount) {
+    // nope
+  }
+
   render() {
     const { sqlTime, activeRecords } = this.props.data;
     const maxTypeLength = _.max(activeRecords.map(({ type }) => type.length)) || 7;

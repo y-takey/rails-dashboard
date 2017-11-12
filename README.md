@@ -46,12 +46,14 @@ and go to 'http://localhost:3000', then any operate.
 
 key | desc
 ---- | ----
-<kbd>j</kbd> or <kbd>↓</kbd> | move down by 1 row
-<kbd>k</kbd> or <kbd>↑</kbd> | move up by 1 row
-<kbd>space</kbd> | move down by 1 page
-<kbd>shift</kbd> + <kbd>space</kbd> | move up by 1 page
+<kbd>j</kbd> or <kbd>↓</kbd> | move down main-view by 1 row
+<kbd>k</kbd> or <kbd>↑</kbd> | move up main-view by 1 row
+<kbd>space</kbd> | move down main-view by 1 page
+<kbd>shift</kbd> + <kbd>space</kbd> | move up main-view by 1 page
 <kbd>g</kbd> | move to top
 <kbd>shift</kbd> + <kbd>g</kbd> | move to bottom
+<kbd>shift</kbd> + <kbd>j</kbd> | move down sub-view(currently [Log] tab only) by 1 row
+<kbd>shift</kbd> + <kbd>k</kbd> | move up sub-view(currently [Log] tab only) by 1 row
 <kbd>enter</kbd> | show detail about selected row
 <kbd>escape</kbd> | hide detail
 <kbd>b</kbd> | show detail with Breakdown tab

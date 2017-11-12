@@ -20,12 +20,14 @@ const foo = ([keys, desc]) => {
 };
 
 const cursorNavKeys = [
-  [[["j", "Down"], "or"], "move down by 1 row"],
-  [[["k", "Up"], "or"], "move up by 1 row"],
-  ["Space", "move down by 1 page"],
-  [[["Shift", "Space"], "+"], "move up by 1 page"],
+  [[["j", "Down"], "or"], "move down main-view by 1 row"],
+  [[["k", "Up"], "or"], "move up main-view by 1 row"],
+  ["Space", "move down main-view by 1 page"],
+  [[["Shift", "Space"], "+"], "move up main-view by 1 page"],
   ["g", "move to top"],
-  [[["Shift", "g"], "+"], "move to bottom"]
+  [[["Shift", "g"], "+"], "move to bottom"],
+  [[["Shift", "j"], "+"], "move down sub-view by 1 row"],
+  [[["Shift", "k"], "+"], "move up sub-view by 1 row"]
 ];
 
 const viewManipulationKeys = [

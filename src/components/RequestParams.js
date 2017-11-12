@@ -4,6 +4,10 @@ import React, { Component } from "react";
 const labelStyle = { fg: "magenta", bold: true };
 
 class RequestParams extends Component {
+  scroll(amount) {
+    // nope
+  }
+
   render() {
     const params = this.props.data.params;
 
