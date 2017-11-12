@@ -66,6 +66,23 @@ key | desc
 * recommended terminal window size is 100 cols * 30 rows higher.
 * current supported Rails is version 5.1 and using Puma. but if there is no difference in format of the log, maybe works fine. If don't works fine, send the log to me please.
 
+
+## Troubleshooting
+
+### Not working to scroll in (long) log subview.
+
+#### iTerm2.app
+
+Try to run following command, and restart iTerm2.
+
+`$ defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true`
+
+FYI: https://stackoverflow.com/a/24695541
+
+#### Terminal.app
+
+You'll need to allow mouse reporting. on menu [View] → [Allow Mouse Reporting].
+
 ## Inspired by
 
 * [RailsPanel](https://github.com/dejan/rails_panel) : RailsPanel is a Chrome extension for Rails development that will end your tailing of development.log
